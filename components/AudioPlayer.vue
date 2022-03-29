@@ -359,6 +359,10 @@ export default {
 
       this.audio.onerror = () => {
         console.log('onerror', this.audio.error.code)
+        // 1 = MEDIA_ERR_ABORTED 用戶中止獲取過程
+        // 2 = MEDIA_ERR_NETWORK 下載時發生錯誤
+        // 3 = MEDIA_ERR_DECODE 解碼時發生錯誤
+        // 4 = MEDIA_ERR_SRC_NOT_SUPPORTED 不支持音頻
       }
     },
     initMedia() {
