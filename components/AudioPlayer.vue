@@ -160,7 +160,7 @@ export default {
         return
       }
 
-      console.log('new:', Number(newValue), 'old:', Number(oldValue))
+      // console.log('new:', Number(newValue), 'old:', Number(oldValue))
 
       this.audio.playbackRate = Number(newValue)
     },
@@ -169,7 +169,7 @@ export default {
         return
       }
 
-      console.log('new:', Number(newValue), 'old:', Number(oldValue))
+      // console.log('new:', Number(newValue), 'old:', Number(oldValue))
 
       if (this.audio.muted && newValue > 0) {
         this.audio.muted = false
@@ -180,9 +180,9 @@ export default {
       }
     },
     source(newValue) {
-      console.log('watch source')
+      // console.log('watch source')
 
-      this.logEnd('watch source', 0)
+      this.logEnd('watch source', this.audio.currentTime)
 
       this.loadFile()
     },
@@ -205,31 +205,30 @@ export default {
       this.readyState = Number(this.audio.readyState)
 
       this.audio.onprogress = () => {
-        console.log('audio-event', 'onprogress')
+        // console.log('audio-event', 'onprogress')
       }
 
       this.audio.onplaying = () => {
-        console.log('audio-event', 'playing')
+        // console.log('audio-event', 'playing')
       }
 
       this.audio.onwaiting = () => {
-        console.log('audio-event', 'waiting')
+        // console.log('audio-event', 'waiting')
       }
 
       this.audio.onseeking = () => {
-        console.log('audio-event', 'seeking')
+        // console.log('audio-event', 'seeking')
 
         this.logEnd('onseeking', this.audio.currentTime)
       }
 
       this.audio.onseeked = () => {
-        console.log('audio-event', 'seeked')
-
-        this.logStart('onseeked')
+        // console.log('audio-event', 'seeked')
+        // this.logStart('onseeked')
       }
 
       this.audio.onended = () => {
-        console.log('audio-event', 'ended')
+        // console.log('audio-event', 'ended')
 
         this.logEnd('onended', this.audio.currentTime)
 
@@ -237,19 +236,19 @@ export default {
       }
 
       this.audio.onloadedmetadata = () => {
-        console.log('audio-event', 'loadedmetadata')
+        // console.log('audio-event', 'loadedmetadata')
       }
 
       this.audio.onloadeddata = () => {
-        console.log('audio-event', 'loadeddata')
+        // console.log('audio-event', 'loadeddata')
       }
 
       this.audio.oncanplay = () => {
-        console.log('audio-event', 'canplay')
+        // console.log('audio-event', 'canplay')
       }
 
       this.audio.oncanplaythrough = () => {
-        console.log('audio-event', 'canplaythrough')
+        // console.log('audio-event', 'canplaythrough')
 
         this.readyState = Number(this.audio.readyState)
 
@@ -257,13 +256,15 @@ export default {
       }
 
       this.audio.ondurationchange = () => {
-        console.log('audio-event', 'durationchange')
+        // console.log('audio-event', 'durationchange')
 
         this.duration = Number(this.audio.duration)
       }
 
       this.audio.ontimeupdate = () => {
-        console.log('audio-event', 'timeupdate')
+        // console.log('audio-event', 'timeupdate')
+
+        this.logStart('ontimeupdate')
 
         this.currentTime = Number(this.audio.currentTime)
 
@@ -287,15 +288,15 @@ export default {
       }
 
       this.audio.onplay = () => {
-        console.log('audio-event', 'play')
+        // console.log('audio-event', 'play')
 
         this.paused = this.audio.paused
 
-        this.logStart('onplay')
+        // this.logStart('onplay')
       }
 
       this.audio.onpause = () => {
-        console.log('audio-event', 'pause', this.audio.paused)
+        // console.log('audio-event', 'pause', this.audio.paused)
 
         this.paused = this.audio.paused
 
@@ -303,7 +304,7 @@ export default {
       }
 
       this.audio.onratechange = () => {
-        console.log('audio-event', 'ratechange')
+        // console.log('audio-event', 'ratechange')
 
         if (this.rate === this.audio.playbackRate) {
           return
@@ -313,12 +314,12 @@ export default {
       }
 
       this.audio.onvolumechange = () => {
-        console.log(
-          'audio-event',
-          'volumechange',
-          this.audio.muted,
-          this.audio.volume
-        )
+        // console.log(
+        //   'audio-event',
+        //   'volumechange',
+        //   this.audio.muted,
+        //   this.audio.volume
+        // )
 
         this.muted = this.audio.muted
 
@@ -332,7 +333,7 @@ export default {
       this.audio.onsuspend = () => {
         this.paused = this.audio.paused
 
-        console.log('audio-event', 'suspend', this.audio.paused)
+        // console.log('audio-event', 'suspend', this.audio.paused)
       }
 
       this.audio.onemptied = () => {
@@ -342,11 +343,11 @@ export default {
         this.paused = this.audio.paused
         this.readyState = Number(this.audio.readyState)
 
-        console.log('audio-event', 'emptied')
+        // console.log('audio-event', 'emptied')
       }
 
       this.audio.onstalled = () => {
-        console.log('audio-event', 'stalled')
+        // console.log('audio-event', 'stalled')
       }
     },
     initMedia() {
@@ -384,7 +385,6 @@ export default {
         window.navigator.mediaSession.setActionHandler(
           'seekbackward',
           (event) => {
-            console.log(event)
             this.backward()
             this.setPositionState()
           }
@@ -393,7 +393,6 @@ export default {
         window.navigator.mediaSession.setActionHandler(
           'seekforward',
           (event) => {
-            console.log(event)
             this.forward()
             this.setPositionState()
           }
@@ -406,7 +405,7 @@ export default {
             this.setPositionState()
           })
         } catch (error) {
-          console.log(error)
+          console.error(error)
         }
 
         window.navigator.mediaSession.setActionHandler('previoustrack', () => {
@@ -422,12 +421,12 @@ export default {
         //     /* Code excerpted. */
         //   })
         // } catch (error) {
-        //   console.log(error)
+        //   console.error(error)
         // }
       }
     },
     loadFile() {
-      console.log('click-event', 'loadFile')
+      // console.log('click-event', 'loadFile')
 
       if (this.source) {
         this.audio.src = this.source.file
@@ -436,7 +435,7 @@ export default {
       }
     },
     play() {
-      console.log('click-event', 'play')
+      // console.log('click-event', 'play')
 
       if (Number(this.audio.readyState) === 0) {
         return
@@ -449,7 +448,7 @@ export default {
       this.audio.play()
     },
     stop() {
-      console.log('click-event', 'stop')
+      // console.log('click-event', 'stop')
 
       if (Number(this.audio.readyState) === 0) {
         return
@@ -460,14 +459,14 @@ export default {
       this.audio.src = ''
     },
     pause() {
-      console.log('click-event', 'pause')
+      // console.log('click-event', 'pause')
 
       if (!this.audio.paused) {
         this.audio.pause()
       }
     },
     backward() {
-      console.log('click-event', 'backward')
+      // console.log('click-event', 'backward')
 
       if (Number(this.audio.readyState) === 0) {
         return
@@ -485,7 +484,7 @@ export default {
       )
     },
     forward() {
-      console.log('click-event', 'forward')
+      // console.log('click-event', 'forward')
 
       if (Number(this.audio.readyState) === 0) {
         return
@@ -533,7 +532,8 @@ export default {
     },
     logStart(eventName) {
       if (this.log) {
-        console.log('log is not null')
+        // console.log('logStart', 'log is not null')
+
         return
       }
 
@@ -541,7 +541,7 @@ export default {
         return
       }
 
-      console.log('logStart', eventName, this.audio.currentTime)
+      // console.log('logStart', eventName, this.audio.currentTime)
 
       this.log = {
         id: this.source.id,
@@ -554,14 +554,16 @@ export default {
     },
     logEnd(eventName, endSec) {
       if (!this.log) {
+        // console.log('logEnd', 'log is null')
+
         return
       }
 
-      if (endSec - this.log.startSec < 1) {
-        return
-      }
+      // if (endSec - this.log.startSec < 1) {
+      //   return
+      // }
 
-      console.log('logEnd', eventName, endSec)
+      // console.log('logEnd', eventName, endSec)
 
       this.log.endSec = endSec
 
@@ -569,7 +571,13 @@ export default {
 
       this.log.endTimestamp = parseInt(Date.now() / 1000)
 
-      console.log(this.log)
+      console.log(
+        'show log',
+        this.log.id,
+        this.log.startSec,
+        this.log.endSec,
+        this.log.diffSec
+      )
 
       this.log = null
     },
