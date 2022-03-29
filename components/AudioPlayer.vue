@@ -113,6 +113,7 @@ export default {
       volume: 0.5,
       rate: 1,
       currentTime: 0,
+      logCurrentTime: 0,
       duration: 0,
       paused: true,
       muted: false,
@@ -182,7 +183,7 @@ export default {
     source(newValue) {
       console.log('watch source')
 
-      this.logEnd('watch source', this.audio.currentTime)
+      this.logEnd('watch source', this.logCurrentTime)
 
       this.loadFile()
     },
@@ -211,7 +212,7 @@ export default {
       this.audio.onplaying = () => {
         console.log('audio-event', 'playing')
 
-        this.logStart('onplaying')
+        // this.logStart('onplaying')
       }
 
       this.audio.onwaiting = () => {
@@ -221,19 +222,19 @@ export default {
       this.audio.onseeking = () => {
         console.log('audio-event', 'seeking')
 
-        this.logEnd('onseeking', this.audio.currentTime)
+        this.logEnd('onseeking', this.logCurrentTime)
       }
 
       this.audio.onseeked = () => {
         console.log('audio-event', 'seeked')
 
-        // this.logStart('onseeked')
+        this.logStart('onseeked')
       }
 
       this.audio.onended = () => {
         console.log('audio-event', 'ended')
 
-        this.logEnd('onended', this.audio.currentTime)
+        this.logEnd('onended', this.logCurrentTime)
 
         this.next()
       }
@@ -267,6 +268,10 @@ export default {
       this.audio.ontimeupdate = () => {
         console.log('audio-event', 'timeupdate')
 
+        if (this.audio.paused === false) {
+          this.logCurrentTime = this.audio.currentTime
+        }
+
         this.currentTime = Number(this.audio.currentTime)
 
         const length = this.audio.buffered.length
@@ -293,7 +298,7 @@ export default {
 
         this.paused = this.audio.paused
 
-        // this.logStart('onplay')
+        this.logStart('onplay')
       }
 
       this.audio.onpause = () => {
@@ -301,7 +306,7 @@ export default {
 
         this.paused = this.audio.paused
 
-        this.logEnd('onpause', this.audio.currentTime)
+        this.logEnd('onpause', this.logCurrentTime)
       }
 
       this.audio.onratechange = () => {
@@ -339,7 +344,7 @@ export default {
 
       this.audio.onemptied = () => {
         // specal
-        this.logEnd('onemptied', this.currentTime)
+        this.logEnd('onemptied', this.logCurrentTime)
 
         this.duration = 0
         this.paused = this.audio.paused
@@ -350,6 +355,10 @@ export default {
 
       this.audio.onstalled = () => {
         console.log('audio-event', 'stalled')
+      }
+
+      this.audio.onerror = () => {
+        console.log('onerror', this.audio.error.code)
       }
     },
     initMedia() {
@@ -478,8 +487,6 @@ export default {
         return
       }
 
-      this.logEnd('backward', this.audio.currentTime)
-
       this.audio.currentTime = Math.max(
         Number(this.audio.currentTime) - this.quickSeconds,
         0
@@ -495,8 +502,6 @@ export default {
       if (Number(this.audio.currentTime) === Number(this.audio.duration)) {
         return
       }
-
-      this.logEnd('forward', this.audio.currentTime)
 
       this.audio.currentTime = Math.min(
         Number(this.audio.currentTime) + this.quickSeconds,
