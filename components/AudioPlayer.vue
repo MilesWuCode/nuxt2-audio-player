@@ -411,7 +411,9 @@ export default {
         window.navigator.mediaSession.setActionHandler(
           'seekbackward',
           (event) => {
-            this.backward()
+            // wip
+            event.seekOffset ? this.backward(event.seekOffset) : this.backward()
+
             this.setPositionState()
           }
         )
@@ -419,15 +421,17 @@ export default {
         window.navigator.mediaSession.setActionHandler(
           'seekforward',
           (event) => {
-            this.forward()
+            // wip
+            event.seekOffset ? this.forward(event.seekOffset) : this.forward()
+
             this.setPositionState()
           }
         )
 
-        // wip:test,setPositionState
         try {
           window.navigator.mediaSession.setActionHandler('seekto', (event) => {
             this.audio.currentTime = event.seekTime
+
             this.setPositionState()
           })
         } catch (error) {
