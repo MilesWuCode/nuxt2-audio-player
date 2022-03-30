@@ -445,8 +445,6 @@ export default {
 
       if (this.source) {
         this.audio.src = this.source.file
-      } else {
-        this.stop()
       }
     },
     play() {
@@ -472,6 +470,8 @@ export default {
       this.audio.pause()
 
       this.audio.src = ''
+
+      this.$store.dispatch('player/stop')
     },
     pause() {
       console.log('click-event', 'pause')

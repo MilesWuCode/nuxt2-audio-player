@@ -22,6 +22,9 @@ export const actions = {
   loop({ commit }) {
     commit('loop')
   },
+  stop({ commit }) {
+    commit('setCurrent', null)
+  }
 }
 
 export const mutations = {
@@ -33,7 +36,12 @@ export const mutations = {
     state.current =
       state.list.find((item) => {
         return item.id === payload.id
-      }) || state.list[0] || null
+      }) ||
+      state.list[0] ||
+      null
+  },
+  setCurrent(state, payload) {
+    state.current = payload
   },
   prev(state) {
     const index = state.list.findIndex((item) => {
