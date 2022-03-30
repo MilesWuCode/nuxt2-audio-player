@@ -2,7 +2,8 @@
   <details>
     <summary>{{ album.name }}</summary>
     <div>
-      <PlayButton
+      <PlayAlbumButton :album="album" />
+      <PlayTrackButton
         v-for="item of album.list"
         :key="item.id"
         :album="album"

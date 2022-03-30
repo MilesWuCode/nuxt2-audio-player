@@ -1,7 +1,13 @@
 <template>
   <div>
     <PlayControll />
+    <hr />
     <AlbumInfo v-for="item of albums" :key="item.id" :album="item" />
+    <hr />
+    <p>
+    Input
+    </p>
+    <textarea v-model="inputAlbums" style="width:800px;height:300px;"></textarea>
   </div>
 </template>
 
@@ -59,8 +65,24 @@ export default {
             },
           ],
         },
+        {
+          id: 3,
+          name: 'empty',
+          list: [],
+        },
       ],
     }
+  },
+  computed: {
+    inputAlbums: {
+      get() {
+        return JSON.stringify(this.albums, null, 2)
+      },
+      set(value) {
+        this.albums = JSON.parse(value)
+        return JSON.parse(value)
+      },
+    },
   },
 }
 </script>

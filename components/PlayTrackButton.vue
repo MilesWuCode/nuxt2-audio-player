@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'PlayButton',
+  name: 'PlayTrackButton',
   props: {
     album: {
       type: Object,

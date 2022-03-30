@@ -3,8 +3,6 @@
     <client-only>
       <AudioPlayer :source="source" />
     </client-only>
-
-    <hr />
   </div>
 </template>
 

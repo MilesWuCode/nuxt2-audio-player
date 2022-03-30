@@ -33,7 +33,7 @@ export const mutations = {
     state.current =
       state.list.find((item) => {
         return item.id === payload.id
-      }) || null
+      }) || state.list[0] || null
   },
   prev(state) {
     const index = state.list.findIndex((item) => {
