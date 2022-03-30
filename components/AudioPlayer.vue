@@ -196,7 +196,7 @@ export default {
       // case1
       this.audio = this.$refs.audio
       // case2
-      // this.audio = new Audio()
+      // this.audio = new Audio
 
       this.audio.autoplay = true
       this.audio.playbackRate = this.rate
