@@ -19,23 +19,26 @@ export default {
       albums: [
         {
           id: 1,
-          name: '1 album',
+          name: 'album 1',
           list: [
             {
               id: 1,
-              name: '001',
+              name: 'name 001',
+              artist: 'artist 001',
               file: 'http://localhost:5500/01.mp3',
               image: 'https://picsum.photos/id/123/300/300',
             },
             {
               id: 2,
-              name: '002',
+              name: 'name 002',
+              artist: 'artist 002',
               file: 'http://localhost:5500/02.mp3',
               image: 'https://picsum.photos/id/234/300/300',
             },
             {
               id: 3,
-              name: '003',
+              name: 'name 003',
+              artist: 'artist 003',
               file: 'http://localhost:5500/03.mp3',
               image: 'https://picsum.photos/id/345/300/300',
             },
@@ -43,31 +46,34 @@ export default {
         },
         {
           id: 2,
-          name: '2 album',
+          name: 'album 2',
           list: [
             {
               id: 4,
-              name: '004',
-              file: 'http://localhost:5500/01.mp3',
+              name: 'name 004',
+              artist: 'artist 004',
+              file: 'http://localhost:5500/04.mp3',
               image: 'https://picsum.photos/id/456/300/300',
             },
             {
               id: 5,
-              name: '005',
-              file: 'http://localhost:5500/02.mp3',
+              name: 'name 005',
+              artist: 'artist 005',
+              file: 'http://localhost:5500/05.mp3',
               image: 'https://picsum.photos/id/567/300/300',
             },
             {
               id: 6,
-              name: '006',
-              file: 'http://localhost:5500/03.mp3',
+              name: 'name 006',
+              artist: 'artist 006',
+              file: 'http://localhost:5500/06.mp3',
               image: 'https://picsum.photos/id/678/300/300',
             },
           ],
         },
         {
           id: 3,
-          name: 'empty',
+          name: 'album empty',
           list: [],
         },
       ],

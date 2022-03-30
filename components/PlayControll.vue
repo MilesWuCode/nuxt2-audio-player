@@ -1,7 +1,7 @@
 <template>
   <div>
     <client-only>
-      <AudioPlayer :source="source" />
+      <AudioPlayer :album="album" :source="source" />
     </client-only>
   </div>
 </template>
@@ -13,6 +13,7 @@ export default {
   name: 'PlayControll',
   computed: {
     ...mapState({
+      album: (state) => state.player.album,
       source: (state) => state.player.current,
     }),
   },

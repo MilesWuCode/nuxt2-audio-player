@@ -101,6 +101,10 @@ export default {
     },
   },
   props: {
+    album: {
+      type: Object || null,
+      default: null,
+    },
     source: {
       type: Object || null,
       default: null,
@@ -189,7 +193,14 @@ export default {
     },
   },
   mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('beforeunload', this.onBeforeunload)
+    })
+
     this.initPlayer()
+  },
+  beforeDestroy() {
+    window.removeEventListener('beforeunload', this.onBeforeunload)
   },
   methods: {
     initPlayer() {
@@ -368,9 +379,9 @@ export default {
     initMedia() {
       if ('mediaSession' in window.navigator) {
         window.navigator.mediaSession.metadata = new MediaMetadata({
-          title: this.source.name,
-          artist: 'artist:' + this.source.name,
-          album: 'album' + this.source.name,
+          title: this.album.name,
+          artist: this.source.artist,
+          album: this.source.name,
           artwork: [
             {
               src: this.source.image,
@@ -540,6 +551,9 @@ export default {
     },
     loop() {
       this.$store.dispatch('player/loop')
+    },
+    onBeforeunload() {
+      this.logEnd('beforeunload', this.logCurrentTime)
     },
     logStart(eventName) {
       console.log('logStart', eventName, this.audio.currentTime)
