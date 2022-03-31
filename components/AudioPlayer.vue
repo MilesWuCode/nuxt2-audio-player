@@ -277,7 +277,7 @@ export default {
       }
 
       this.audio.ontimeupdate = () => {
-        console.log('audio-event', 'timeupdate')
+        // console.log('audio-event', 'timeupdate')
 
         if (this.audio.paused === false) {
           this.logCurrentTime = this.audio.currentTime
