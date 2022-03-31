@@ -1,5 +1,12 @@
 export default {
   ssr: false,
+
+  target: 'static',
+
+  router: {
+    base: '/nuxt2-audio-player/'
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'nuxt2-audio-player',
