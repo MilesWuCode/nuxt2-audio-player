@@ -40,8 +40,12 @@
         </button>
         <button :disabled="paused" @click="pause">Pause</button>
         |
-        <button :disabled="readyState !== 4" @click="backward">-15s</button>
-        <button :disabled="readyState !== 4" @click="forward">+15s</button>
+        <button :disabled="readyState !== 4" @click="backward(seekOffset)">
+          -15s
+        </button>
+        <button :disabled="readyState !== 4" @click="forward(seekOffset)">
+          +15s
+        </button>
         |
         <button @click="loop">loop</button>
         <button @click="prev">prev</button>
@@ -122,7 +126,7 @@ export default {
       paused: true,
       muted: false,
       readyState: 0,
-      quickSeconds: 15,
+      seekOffset: 15,
       buffer: 0,
       // 進度條
       sliderProcess: (dotsPos) => [
@@ -411,7 +415,7 @@ export default {
         window.navigator.mediaSession.setActionHandler(
           'seekbackward',
           (event) => {
-            this.backward(event.seekOffset || null)
+            this.backward(event.seekOffset || this.seekOffset)
 
             this.setPositionState()
           }
@@ -420,7 +424,7 @@ export default {
         window.navigator.mediaSession.setActionHandler(
           'seekforward',
           (event) => {
-            this.forward(event.seekOffset || null)
+            this.forward(event.seekOffset || this.seekOffset)
 
             this.setPositionState()
           }
@@ -493,7 +497,7 @@ export default {
         this.audio.pause()
       }
     },
-    backward(seekOffset = null) {
+    backward(seekOffset) {
       console.log('click-event', 'backward')
 
       if (Number(this.audio.readyState) === 0) {
@@ -505,11 +509,11 @@ export default {
       }
 
       this.audio.currentTime = Math.max(
-        Number(this.audio.currentTime) - (seekOffset || this.quickSeconds),
+        Number(this.audio.currentTime) - seekOffset,
         0
       )
     },
-    forward(seekOffset = null) {
+    forward(seekOffset) {
       console.log('click-event', 'forward')
 
       if (Number(this.audio.readyState) === 0) {
@@ -521,7 +525,7 @@ export default {
       }
 
       this.audio.currentTime = Math.min(
-        Number(this.audio.currentTime) + (seekOffset || this.quickSeconds),
+        Number(this.audio.currentTime) + seekOffset,
         Number(this.audio.duration)
       )
     },
