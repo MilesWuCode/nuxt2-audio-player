@@ -1,5 +1,7 @@
 # nuxt2-audio-player
 
+[Demo](https://MilesWuCode.github.io/nuxt2-audio-player)
+
 ## Build Setup
 
 ```bash
