@@ -411,8 +411,7 @@ export default {
         window.navigator.mediaSession.setActionHandler(
           'seekbackward',
           (event) => {
-            // wip
-            event.seekOffset ? this.backward(event.seekOffset) : this.backward()
+            this.backward(event.seekOffset || null)
 
             this.setPositionState()
           }
@@ -421,8 +420,7 @@ export default {
         window.navigator.mediaSession.setActionHandler(
           'seekforward',
           (event) => {
-            // wip
-            event.seekOffset ? this.forward(event.seekOffset) : this.forward()
+            this.forward(event.seekOffset || null)
 
             this.setPositionState()
           }
@@ -495,7 +493,7 @@ export default {
         this.audio.pause()
       }
     },
-    backward() {
+    backward(seekOffset = null) {
       console.log('click-event', 'backward')
 
       if (Number(this.audio.readyState) === 0) {
@@ -507,11 +505,11 @@ export default {
       }
 
       this.audio.currentTime = Math.max(
-        Number(this.audio.currentTime) - this.quickSeconds,
+        Number(this.audio.currentTime) - (seekOffset || this.quickSeconds),
         0
       )
     },
-    forward() {
+    forward(seekOffset = null) {
       console.log('click-event', 'forward')
 
       if (Number(this.audio.readyState) === 0) {
@@ -523,7 +521,7 @@ export default {
       }
 
       this.audio.currentTime = Math.min(
-        Number(this.audio.currentTime) + this.quickSeconds,
+        Number(this.audio.currentTime) + (seekOffset || this.quickSeconds),
         Number(this.audio.duration)
       )
     },
