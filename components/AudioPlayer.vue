@@ -279,7 +279,7 @@ export default {
         console.log('audio-event', 'durationchange')
 
         this.duration =
-          Number.isFinite(this.audio.duration) ||
+          !Number.isFinite(this.audio.duration) ||
           Number.isNaN(this.audio.duration)
             ? 0
             : Number(this.audio.duration || 0)
