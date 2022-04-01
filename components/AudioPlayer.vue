@@ -82,8 +82,6 @@ export default {
   name: 'AudioPlayer',
   filters: {
     secondsToString(sec) {
-      console.log('secondsToString', sec)
-
       const t = Math.floor(sec)
 
       if (t === 0) {
@@ -231,8 +229,6 @@ export default {
 
       this.audio.onplaying = () => {
         console.log('audio-event', 'playing')
-
-        // this.logStart('onplaying')
       }
 
       this.audio.onwaiting = () => {
@@ -282,7 +278,11 @@ export default {
       this.audio.ondurationchange = () => {
         console.log('audio-event', 'durationchange')
 
-        this.duration = Number(this.audio.duration || 0)
+        this.duration =
+          Number.isFinite(this.audio.duration) ||
+          Number.isNaN(this.audio.duration)
+            ? 0
+            : Number(this.audio.duration || 0)
       }
 
       this.audio.ontimeupdate = () => {
