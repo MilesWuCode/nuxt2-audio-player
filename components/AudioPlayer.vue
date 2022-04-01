@@ -73,7 +73,6 @@
 
     <div>
       <button @click="consoleAudio">console audio</button>
-      <button @click="loadFile">load file</button>
     </div>
   </div>
 </template>
@@ -83,6 +82,8 @@ export default {
   name: 'AudioPlayer',
   filters: {
     secondsToString(sec) {
+      console.log('secondsToString', sec)
+
       const t = Math.floor(sec)
 
       if (t === 0) {
@@ -195,7 +196,9 @@ export default {
 
       this.logEnd('watch source', this.logCurrentTime)
 
-      this.loadFile()
+      if (this.source) {
+        this.audio.src = this.source.file
+      }
     },
   },
   mounted() {
@@ -463,13 +466,6 @@ export default {
         // } catch (error) {
         //   console.error(error)
         // }
-      }
-    },
-    loadFile() {
-      console.log('click-event', 'loadFile')
-
-      if (this.source) {
-        this.audio.src = this.source.file
       }
     },
     play() {
