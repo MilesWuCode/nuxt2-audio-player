@@ -157,7 +157,9 @@ export default {
         return percent
       },
       set(value) {
-        this.audio.currentTime = Math.floor(Number(this.audio.duration) * value)
+        this.audio.currentTime = Math.floor(
+          Number(this.audio.duration || 0) * value
+        )
 
         return value
       },
@@ -277,7 +279,7 @@ export default {
       this.audio.ondurationchange = () => {
         console.log('audio-event', 'durationchange')
 
-        this.duration = Number(this.audio.duration)
+        this.duration = Number(this.audio.duration || 0)
       }
 
       this.audio.ontimeupdate = () => {
@@ -300,7 +302,8 @@ export default {
         for (let i = 0; i < length; i++) {
           if (
             this.audio.buffered.start(i) <= time &&
-            this.audio.buffered.end(i) >= time
+            this.audio.buffered.end(i) >= time &&
+            Number(this.audio.duration || 0) > 0
           ) {
             this.buffer =
               (this.audio.buffered.end(i) / Number(this.audio.duration)) * 100
@@ -531,7 +534,7 @@ export default {
 
       this.audio.currentTime = Math.min(
         Number(this.audio.currentTime) + seekOffset,
-        Number(this.audio.duration)
+        Number(this.audio.duration || 0)
       )
     },
     mule() {
