@@ -432,6 +432,11 @@ export default {
 
         try {
           window.navigator.mediaSession.setActionHandler('seekto', (event) => {
+            // if (event.fastSeek && 'fastSeek' in this.audio) {
+            //   this.audio.fastSeek(event.seekTime)
+            //   return
+            // }
+
             this.audio.currentTime = event.seekTime
 
             this.setPositionState()

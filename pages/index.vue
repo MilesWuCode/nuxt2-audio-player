@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PlayControll />
+    <AudioControll />
     <hr />
     <AlbumInfo v-for="item of albums" :key="item.id" :album="item" />
     <hr />

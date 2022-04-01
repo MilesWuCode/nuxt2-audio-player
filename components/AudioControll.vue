@@ -1,8 +1,6 @@
 <template>
   <div>
-    <client-only>
-      <AudioPlayer :album="album" :source="source" />
-    </client-only>
+    <AudioPlayer :album="album" :source="source" />
   </div>
 </template>
 
@@ -10,7 +8,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'PlayControll',
+  name: 'AudioControll',
   computed: {
     ...mapState({
       album: (state) => state.player.album,
