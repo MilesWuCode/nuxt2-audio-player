@@ -418,30 +418,30 @@ export default {
           window.navigator.mediaSession.playbackState = 'none'
         })
 
-        window.navigator.mediaSession.setActionHandler(
-          'seekbackward',
-          (event) => {
-            this.backward(event.seekOffset || this.seekOffset)
+        // window.navigator.mediaSession.setActionHandler(
+        //   'seekbackward',
+        //   (event) => {
+        //     this.backward(event.seekOffset || this.seekOffset)
 
-            this.setPositionState()
-          }
-        )
+        //     this.setPositionState()
+        //   }
+        // )
 
-        window.navigator.mediaSession.setActionHandler(
-          'seekforward',
-          (event) => {
-            this.forward(event.seekOffset || this.seekOffset)
+        // window.navigator.mediaSession.setActionHandler(
+        //   'seekforward',
+        //   (event) => {
+        //     this.forward(event.seekOffset || this.seekOffset)
 
-            this.setPositionState()
-          }
-        )
+        //     this.setPositionState()
+        //   }
+        // )
 
         try {
           window.navigator.mediaSession.setActionHandler('seekto', (event) => {
-            // if (event.fastSeek && 'fastSeek' in this.audio) {
-            //   this.audio.fastSeek(event.seekTime)
-            //   return
-            // }
+            if (event.fastSeek && 'fastSeek' in this.audio) {
+              this.audio.fastSeek(event.seekTime)
+              return
+            }
 
             this.audio.currentTime = event.seekTime
 
