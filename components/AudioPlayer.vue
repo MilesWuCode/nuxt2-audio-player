@@ -612,12 +612,12 @@ export default {
 
 <style scoped>
 audio {
-  width: 800px;
+  width: 100%;
 }
 
 .slider {
   display: block;
-  width: 800px;
+  width: 100%;
 }
 
 .info {
@@ -625,6 +625,6 @@ audio {
 }
 
 div {
-  margin: 0 4px 20px 4px;
+  margin-bottom: 20px;
 }
 </style>

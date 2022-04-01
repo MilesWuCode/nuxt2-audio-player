@@ -7,7 +7,7 @@
     <p>
     Input
     </p>
-    <textarea v-model="inputAlbums" style="width:800px;height:300px;"></textarea>
+    <textarea v-model="inputAlbums" style="width:100%;height:300px;"></textarea>
   </div>
 </template>
 
