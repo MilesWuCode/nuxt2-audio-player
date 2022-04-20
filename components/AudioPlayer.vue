@@ -117,8 +117,8 @@ export default {
     return {
       audio: null,
       second: 0,
-      volume: 0.5,
-      rate: 1,
+      volume: Number(localStorage.player_volume) || 0.5,
+      rate: Number(localStorage.player_rate) || 1,
       currentTime: 0,
       logCurrentTime: 0,
       duration: 0,
@@ -172,7 +172,7 @@ export default {
 
       console.log({ new: Number(newValue), old: Number(oldValue) })
 
-      this.audio.playbackRate = Number(newValue)
+      this.audio.playbackRate = localStorage.player_rate = Number(newValue)
     },
     volume(newValue, oldValue) {
       if (Number(newValue) === Number(oldValue)) {
@@ -186,7 +186,7 @@ export default {
       }
 
       if (!this.audio.muted) {
-        this.audio.volume = Number(newValue)
+        this.audio.volume = localStorage.player_volume = Number(newValue)
       }
     },
     source(newValue) {
@@ -210,6 +210,12 @@ export default {
     window.removeEventListener('beforeunload', this.onBeforeunload)
   },
   methods: {
+    // updateSetting() {
+    //   localStorage.player = JSON.stringify({
+    //     volume: this.volume,
+    //     rate: this.rate,
+    //   })
+    // },
     initPlayer() {
       // case1
       this.audio = this.$refs.audio
