@@ -1,9 +1,5 @@
 <template>
   <div>
-    <audio ref="audio" controls style="margin-top:200px"></audio>
-
-    <hr />
-
     <div>
       <div>
         <p class="info">
@@ -72,6 +68,7 @@
     <hr />
 
     <div>
+      <audio ref="audio" controls></audio>
       <button @click="consoleAudio">console audio</button>
     </div>
   </div>
@@ -553,7 +550,6 @@ export default {
     },
     consoleAudio() {
       console.dir(this.audio)
-      console.dir(this.audio.readyState)
     },
     prev() {
       this.$store.dispatch('player/prev')
