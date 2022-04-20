@@ -1,6 +1,6 @@
 <template>
   <div>
-    <audio ref="audio" controls></audio>
+    <audio ref="audio" controls style="margin-top:200px"></audio>
 
     <hr />
 
@@ -196,6 +196,8 @@ export default {
 
       if (this.source) {
         this.audio.src = this.source.file
+
+        this.audio.playbackRate = this.rate
       }
     },
   },
@@ -210,12 +212,6 @@ export default {
     window.removeEventListener('beforeunload', this.onBeforeunload)
   },
   methods: {
-    // updateSetting() {
-    //   localStorage.player = JSON.stringify({
-    //     volume: this.volume,
-    //     rate: this.rate,
-    //   })
-    // },
     initPlayer() {
       // case1
       this.audio = this.$refs.audio
