@@ -1,5 +1,9 @@
 <template>
   <div>
+    <p>
+      uuid : {{uuid}}
+    </p>
+
     <div>
       <div>
         <p class="info">
@@ -70,6 +74,7 @@
     <div>
       <audio ref="audio" controls></audio>
       <button @click="consoleAudio">console audio</button>
+      <button @click="useNotify">use Notify</button>
     </div>
   </div>
 </template>
@@ -112,6 +117,7 @@ export default {
   },
   data() {
     return {
+      uuid: Date.now(),
       audio: null,
       second: 0,
       volume: Number(localStorage.playerVolume) || 0.5,
@@ -201,14 +207,28 @@ export default {
   mounted() {
     this.$nextTick(() => {
       window.addEventListener('beforeunload', this.onBeforeunload)
+      window.addEventListener('storage', this.eventStorage)
     })
 
     this.initPlayer()
   },
   beforeDestroy() {
     window.removeEventListener('beforeunload', this.onBeforeunload)
+    window.removeEventListener('storage', this.eventStorage)
   },
   methods: {
+    eventStorage(event) {
+      if(event.key === 'device') {
+        if(window.localStorage.getItem('device') !== this.uuid) {
+          this.pause()
+
+          // eslint-disable-next-line no-new
+          new window.Notification('other tabs on play')
+
+          console.log('other tabs on play')
+        }
+      }
+    },
     initPlayer() {
       // case1
       this.audio = this.$refs.audio
@@ -317,6 +337,10 @@ export default {
         console.log('audio-event', 'play')
 
         this.paused = this.audio.paused
+
+        if (window.localStorage.getItem('device') !== this.uuid) {
+          window.localStorage.setItem('device', this.uuid)
+        }
 
         this.logStart('onplay')
       }
@@ -604,6 +628,9 @@ export default {
 
       this.log = null
     },
+    useNotify() {
+      window.Notification.requestPermission()
+    }
   },
 }
 </script>
